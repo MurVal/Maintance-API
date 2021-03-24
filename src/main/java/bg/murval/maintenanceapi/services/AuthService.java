@@ -1,5 +1,6 @@
 package bg.murval.maintenanceapi.services;
 
+import bg.murval.maintenanceapi.exceptions.AuthException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -13,7 +14,7 @@ public class AuthService {
     public void checkAuth(String token){
 
         if (!StringUtils.hasText(token) || !token.equals(authToken)) {
-            throw new RuntimeException("Invalid Token");
+            throw new AuthException();
         }
     }
 }
