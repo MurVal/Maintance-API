@@ -7,16 +7,19 @@ import org.springframework.stereotype.Repository;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicLong;
 
 @Repository
 public class InMemoryDao implements TaskDao{
-    private final Map<Integer,Task> database = new HashMap<Integer, Task>();
+    private final AtomicLong currentId = new AtomicLong(0);
+
+    private final Map<Long,Task> database = new HashMap<>();
 
     @Override
-    public void addTask(TaskRequest taskRequest) {
-        final int lastId = database.keySet().stream().sorted().findFirst().orElse(0);
-        Task tsk = new Task(lastId+1,taskRequest.getName(),taskRequest.getDescription(),taskRequest.getStatus());
-        database.put(tsk.getId(),tsk);
+    public void addTask(Task task) {
+
+        database.put(task.getId(),task);
     }
 
     @Override
@@ -25,10 +28,8 @@ public class InMemoryDao implements TaskDao{
     }
 
     @Override
-    public Task getTaskById(int id) {
-
-
-        return null;
+    public Optional<Task> getTaskById(long id) {
+        return Optional.ofNullable(database.get(id));
     }
 
     @Override
@@ -39,5 +40,10 @@ public class InMemoryDao implements TaskDao{
     @Override
     public void deleteTask(int id) {
 
+    }
+
+    @Override
+    public long getNewId(){
+        return currentId.incrementAndGet();
     }
 }
