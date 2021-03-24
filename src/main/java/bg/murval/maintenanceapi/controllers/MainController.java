@@ -39,8 +39,7 @@ public class MainController {
     }
 
     @GetMapping(path = "{id}")
-    public Task getTaskById(@PathVariable final long id, @RequestHeader() final String authorization) {
-        authService.checkAuth(authorization);
+    public Task getTaskById(@PathVariable final long id) {
         Optional<Task> task = taskService.getTaskById(id);
         return task.orElse(null);
     }
