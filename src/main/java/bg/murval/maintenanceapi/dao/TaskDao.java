@@ -1,20 +1,18 @@
 package bg.murval.maintenanceapi.dao;
 
 import bg.murval.maintenanceapi.models.Task;
-import bg.murval.maintenanceapi.models.TaskRequest;
-
 import java.util.List;
 import java.util.Optional;
 
 public interface TaskDao {
 
-    void addTask(Task task);
+    long getNewId();
 
     List<Task> getTasks();
 
-    Optional<Task> getTaskById(long id);
+    Optional<Task> getTaskById(final long id);
 
-    void deleteTask(long id);
+    void addTask(final Task task);
 
-    long getNewId();
+    void deleteTask(final long id);
 }

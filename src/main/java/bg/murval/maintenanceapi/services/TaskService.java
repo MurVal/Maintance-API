@@ -12,10 +12,14 @@ import java.util.Optional;
 
 @Service
 public class TaskService {
-    TaskDao taskDao;
+    private final TaskDao taskDao;
+
+    public TaskService(final TaskDao taskDao) {
+        this.taskDao = taskDao;
+    }
 
     //За да променим title and description
-    public void editTask(long id, TaskRequest taskRequest) {
+    public void editTask(final long id,final TaskRequest taskRequest) {
         Optional<Task> task = getTaskById(id);
         task.ifPresent(t -> {
             t.setName(taskRequest.getName());
@@ -24,16 +28,17 @@ public class TaskService {
         });
     }
     //To update status
-    public void updateTask(long id, Status status) {
+    public void updateTask(final long id, final Status status) {
         getTaskById(id).ifPresent(value -> value.setStatus(status));
     }
 
-    public void addTask(TaskRequest task) {
+    public void addTask(final TaskRequest taskRequest) {
         final long id = taskDao.getNewId();
-        taskDao.addTask(new Task(id, task.getName(), task.getDescription(), task.getStatus()));
+        final Task task = new Task(id, taskRequest.getName(), taskRequest.getDescription(), taskRequest.getStatus());
+        taskDao.addTask(task);
     }
 
-    public Optional<Task> getTaskById(long id) {
+    public Optional<Task> getTaskById(final long id) {
         return taskDao.getTaskById(id);
     }
 
@@ -41,7 +46,7 @@ public class TaskService {
         return taskDao.getTasks();
     }
 
-    public void deleteTask(long id){
+    public void deleteTask(final long id){
         taskDao.deleteTask(id);
     }
 }
