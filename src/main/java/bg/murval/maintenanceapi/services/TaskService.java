@@ -14,8 +14,13 @@ public class TaskService {
     TaskDao taskDao;
 
     //За да променим title and description
-    public void editTask(long id,) {
-        Optional<Task> = getTaskById(id)
+    public void editTask(long id, TaskRequest taskRequest) {
+        Optional<Task> task = getTaskById(id);
+        task.ifPresent(t -> {
+            t.setName(taskRequest.getName());
+            t.setDescription(taskRequest.getDescription());
+            t.setStatus(taskRequest.getStatus());
+        });
     }
     //To update status
     public void updateTask(long id, Status status) {

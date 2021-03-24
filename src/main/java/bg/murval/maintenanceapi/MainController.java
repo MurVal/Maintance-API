@@ -3,6 +3,7 @@ package bg.murval.maintenanceapi;
 import bg.murval.maintenanceapi.models.Task;
 import bg.murval.maintenanceapi.models.TaskRequest;
 import bg.murval.maintenanceapi.services.TaskService;
+import bg.murval.maintenanceapi.utils.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -25,9 +26,13 @@ public class MainController {
         taskService.addTask(task);
     }
 
+    @PutMapping(path = "{id}/{status}")
+    public void updateTask(@PathVariable long id, @PathVariable Status status){
+        taskService.updateTask(id,status);
+    }
     @PutMapping(path = "{id}")
-    public void setState(@PathVariable int id){
-
+    public void editTask(@PathVariable long id, @RequestBody TaskRequest taskRequest){
+        taskService.editTask(id,taskRequest);
     }
     @GetMapping(path = "{id}")
     private Task getTaskById(@PathVariable long id){
