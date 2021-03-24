@@ -4,27 +4,26 @@ import bg.murval.maintenanceapi.models.Task;
 import bg.murval.maintenanceapi.models.TaskRequest;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Repository
-public class InMemoryDao implements TaskDao{
+public class InMemoryDao implements TaskDao {
     private final AtomicLong currentId = new AtomicLong(0);
 
-    private final Map<Long,Task> database = new HashMap<>();
+    private final Map<Long, Task> database = new HashMap<>();
 
     @Override
     public void addTask(Task task) {
 
-        database.put(task.getId(),task);
+        database.put(task.getId(), task);
     }
 
     @Override
     public List<Task> getTasks() {
-        return null;
+        List<Task> list = new ArrayList<>();
+        database.forEach((id, task) -> list.add(task));
+        return list;
     }
 
     @Override
@@ -32,18 +31,15 @@ public class InMemoryDao implements TaskDao{
         return Optional.ofNullable(database.get(id));
     }
 
-    @Override
-    public void editTask(int id, Task task) {
 
+
+    @Override
+    public void deleteTask(long id) {
+        database.remove(id);
     }
 
     @Override
-    public void deleteTask(int id) {
-
-    }
-
-    @Override
-    public long getNewId(){
+    public long getNewId() {
         return currentId.incrementAndGet();
     }
 }

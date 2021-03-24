@@ -14,9 +14,7 @@ public interface TaskDao {
 
     Optional<Task> getTaskById(long id);
 
-    void editTask(int id, Task task);
-
-    void deleteTask(int id);
+    void deleteTask(long id);
 
     long getNewId();
 }

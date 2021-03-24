@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -35,14 +36,18 @@ public class MainController {
         taskService.editTask(id,taskRequest);
     }
     @GetMapping(path = "{id}")
-    private Task getTaskById(@PathVariable long id){
+    public Task getTaskById(@PathVariable long id){
         Optional<Task> task = taskService.getTaskById(id);
-        if(task.isPresent()){
-            return task.get();
-        }
-        else{
-            return null;
-            //todo null error
-        }
+        //todo null error
+        return task.orElse(null);
     }
+    @GetMapping()
+    public List<Task> getAllTasks(){
+        return taskService.getAllTasks();
+    }
+    @DeleteMapping(path = "{id}")
+    public void deleteTaskById(@PathVariable long id){
+        taskService.deleteTask(id);
+    }
+
 }

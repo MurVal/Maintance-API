@@ -7,6 +7,7 @@ import bg.murval.maintenanceapi.models.TaskRequest;
 import bg.murval.maintenanceapi.utils.Status;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -34,5 +35,13 @@ public class TaskService {
 
     public Optional<Task> getTaskById(long id) {
         return taskDao.getTaskById(id);
+    }
+
+    public List<Task> getAllTasks() {
+        return taskDao.getTasks();
+    }
+
+    public void deleteTask(long id){
+        taskDao.deleteTask(id);
     }
 }
