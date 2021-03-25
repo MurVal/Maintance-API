@@ -18,12 +18,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/task")
-public class MainController {
+public class TaskController {
 
     private final TaskService taskService;
 
     @Autowired
-    public MainController(final TaskService taskService) {
+    public TaskController(final TaskService taskService) {
         this.taskService = taskService;
     }
 
