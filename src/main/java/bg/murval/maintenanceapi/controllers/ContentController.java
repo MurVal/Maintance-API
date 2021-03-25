@@ -3,6 +3,7 @@ package bg.murval.maintenanceapi.controllers;
 import bg.murval.maintenanceapi.interceptors.LoginRequired;
 import bg.murval.maintenanceapi.models.PageConfig;
 import bg.murval.maintenanceapi.services.PageConfigService;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -21,6 +22,7 @@ public class ContentController {
     }
 
     @GetMapping("/")
+    @CrossOrigin
     public PageConfig getConfig() {
         return configService.getPageConfig();
     }

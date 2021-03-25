@@ -5,6 +5,7 @@ import bg.murval.maintenanceapi.models.Task;
 import bg.murval.maintenanceapi.services.TaskService;
 import bg.murval.maintenanceapi.utils.Status;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,11 +29,13 @@ public class TaskController {
     }
 
     @GetMapping("/")
+    @CrossOrigin
     public List<Task> getAllTasks() {
         return taskService.getAllTasks();
     }
 
     @GetMapping(path = "{id}")
+    @CrossOrigin
     public Task getTaskById(@PathVariable final long id) {
         return taskService.getTaskById(id);
     }
