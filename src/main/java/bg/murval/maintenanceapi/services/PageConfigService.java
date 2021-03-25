@@ -2,6 +2,7 @@ package bg.murval.maintenanceapi.services;
 
 import bg.murval.maintenanceapi.models.PageConfig;
 import bg.murval.maintenanceapi.repository.PageConfigRepository;
+import bg.murval.maintenanceapi.utils.Status;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,9 +15,8 @@ public class PageConfigService {
     }
 
     public void updateConfig(final PageConfig requestPage) {
-        final PageConfig pageConfig = pageConfigRepository.findById(1L).orElse(new PageConfig());
+        final PageConfig pageConfig = getPageConfig();
 
-        pageConfig.setId(1);
         final String title = requestPage.getTitle();
         if (title != null) {
             pageConfig.setTitle(title);
@@ -25,8 +25,15 @@ public class PageConfigService {
         if (description != null) {
             pageConfig.setDescription(description);
         }
-
-        pageConfigRepository.save(requestPage);
+        final Status status = requestPage.getStatus();
+        if (status != null) {
+            pageConfig.setStatus(status);
+        }
+        final String pageTitle = requestPage.getPageTitle();
+        if (pageTitle != null) {
+            pageConfig.setPageTitle(pageTitle);
+        }
+        pageConfigRepository.save(pageConfig);
     }
 
     public void setConfig(final PageConfig requestPage) {
@@ -35,6 +42,6 @@ public class PageConfigService {
     }
 
     public PageConfig getPageConfig() {
-        return pageConfigRepository.findById(1L).orElse(new PageConfig());
+        return pageConfigRepository.findById(1L).orElse(new PageConfig(1L));
     }
 }

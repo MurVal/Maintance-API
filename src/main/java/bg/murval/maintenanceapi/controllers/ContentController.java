@@ -22,7 +22,6 @@ public class ContentController {
     }
 
     @GetMapping("/")
-    @CrossOrigin
     public PageConfig getConfig() {
         return configService.getPageConfig();
     }

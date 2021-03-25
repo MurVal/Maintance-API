@@ -1,5 +1,7 @@
 package bg.murval.maintenanceapi.models;
 
+import bg.murval.maintenanceapi.utils.Status;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,16 +17,32 @@ public class PageConfig {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String title;
+    private Status status;
+    private String pageTitle;
     @Column(length = 1000)
     private String description;
 
     public PageConfig() {
     }
 
-    public PageConfig(final long id, final String title, final String description) {
+    public PageConfig(final long id) {
         this.id = id;
-        this.title = title;
-        this.description = description;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(final Status status) {
+        this.status = status;
+    }
+
+    public String getPageTitle() {
+        return pageTitle;
+    }
+
+    public void setPageTitle(final String pageTitle) {
+        this.pageTitle = pageTitle;
     }
 
     public long getId() {

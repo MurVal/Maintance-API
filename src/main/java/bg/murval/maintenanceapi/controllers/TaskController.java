@@ -29,13 +29,11 @@ public class TaskController {
     }
 
     @GetMapping("/")
-    @CrossOrigin
     public List<Task> getAllTasks() {
         return taskService.getAllTasks();
     }
 
     @GetMapping(path = "{id}")
-    @CrossOrigin
     public Task getTaskById(@PathVariable final long id) {
         return taskService.getTaskById(id);
     }
