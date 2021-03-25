@@ -1,49 +1,52 @@
 package bg.murval.maintenanceapi.services;
 
-
-import bg.murval.maintenanceapi.dao.TaskDao;
+import bg.murval.maintenanceapi.exceptions.NoTaskException;
 import bg.murval.maintenanceapi.models.Task;
+import bg.murval.maintenanceapi.repository.TaskRepository;
 import bg.murval.maintenanceapi.utils.Status;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class TaskService {
-    private final TaskDao taskDao;
 
-    public TaskService(final TaskDao taskDao) {
-        this.taskDao = taskDao;
+    private final TaskRepository taskRepository;
+
+
+    public TaskService(final TaskRepository taskRepository) {
+        this.taskRepository = taskRepository;
     }
 
     public void editTask(final long id, final Task taskRequest) {
-        final Optional<Task> task = getTaskById(id);
-        task.ifPresent(t -> {
-            t.setName(taskRequest.getName());
-            t.setDescription(taskRequest.getDescription());
-            t.setStatus(taskRequest.getStatus());
-        });
+        final Task task = getTaskById(id);
+
+        task.setName(taskRequest.getName());
+        task.setDescription(taskRequest.getDescription());
+        task.setStatus(taskRequest.getStatus());
+
+        taskRepository.save(task);
     }
 
     public void updateTask(final long id, final Status status) {
-        getTaskById(id).ifPresent(value -> value.setStatus(status));
+        final Task task = getTaskById(id);
+        task.setStatus(status);
+        taskRepository.save(task);
     }
 
     public void addTask(final Task task) {
-        task.setId(taskDao.getNewId());
-        taskDao.addTask(task);
+        taskRepository.save(task);
     }
 
-    public Optional<Task> getTaskById(final long id) {
-        return taskDao.getTaskById(id);
+    public Task getTaskById(final long id) {
+        return taskRepository.findById(id).orElseThrow(NoTaskException::new);
     }
 
     public List<Task> getAllTasks() {
-        return taskDao.getTasks();
+        return taskRepository.findAll();
     }
 
     public void deleteTask(final long id) {
-        taskDao.deleteTask(id);
+        taskRepository.deleteById(id);
     }
 }

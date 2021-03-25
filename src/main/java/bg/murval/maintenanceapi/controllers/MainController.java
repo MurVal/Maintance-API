@@ -1,6 +1,5 @@
 package bg.murval.maintenanceapi.controllers;
 
-import bg.murval.maintenanceapi.exceptions.NoTaskException;
 import bg.murval.maintenanceapi.interceptors.LoginRequired;
 import bg.murval.maintenanceapi.models.Task;
 import bg.murval.maintenanceapi.services.TaskService;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("api/task")
@@ -36,8 +34,7 @@ public class MainController {
 
     @GetMapping(path = "{id}")
     public Task getTaskById(@PathVariable final long id) {
-        Optional<Task> task = taskService.getTaskById(id);
-        return task.orElseThrow(NoTaskException::new);
+        return taskService.getTaskById(id);
     }
 
     @LoginRequired
