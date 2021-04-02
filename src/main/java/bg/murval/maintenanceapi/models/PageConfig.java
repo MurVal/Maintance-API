@@ -17,6 +17,7 @@ public class PageConfig {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String title;
+    private String subTitle;
     private Status status;
     private String pageTitle;
     @Column(length = 1000)
@@ -27,6 +28,14 @@ public class PageConfig {
 
     public PageConfig(final long id) {
         this.id = id;
+    }
+
+    public String getSubTitle() {
+        return subTitle;
+    }
+
+    public void setSubTitle(final String subTitle) {
+        this.subTitle = subTitle;
     }
 
     public Status getStatus() {

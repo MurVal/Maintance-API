@@ -29,6 +29,10 @@ public class PageConfigService {
         if (status != null) {
             pageConfig.setStatus(status);
         }
+        final String subTitle = requestPage.getSubTitle();
+        if (subTitle != null) {
+            pageConfig.setSubTitle(subTitle);
+        }
         final String pageTitle = requestPage.getPageTitle();
         if (pageTitle != null) {
             pageConfig.setPageTitle(pageTitle);
