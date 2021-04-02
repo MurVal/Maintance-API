@@ -22,6 +22,7 @@ public class ContentController {
     }
 
     @GetMapping("/")
+    @CrossOrigin(origins = "https://maint.amhost.bg")
     public PageConfig getConfig() {
         return configService.getPageConfig();
     }
